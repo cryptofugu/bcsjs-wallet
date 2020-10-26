@@ -1,8 +1,9 @@
-lib
 node_modules
 *.tgz
-src/scripts
+src
 notes
 data
 .cache
 contracts
+scripts
+npm-debug.log

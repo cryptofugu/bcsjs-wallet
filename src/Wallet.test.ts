@@ -1,7 +1,7 @@
 import { assert } from "chai"
 
 import { networks, generateMnemonic, NetworkNames } from "./"
-import { generateBlock } from "./qtumRPC"
+import { generateBlock } from "./bcsRPC"
 import { sleep } from "./time"
 import { params } from "./scrypt"
 
@@ -93,13 +93,13 @@ describe("Wallet", () => {
     const wallet = network.fromWIF(wifPrivateKey)
 
     const toAddress = "qLn9vqbr2Gx3TsVR9QyTVB5mrMoh4x43Uf"
-    const amount = 1e8 // 1 qtum (in sat)
+    const amount = 1e8 // 1 bcs (in sat)
 
     const senderOldInfo = await insight.getInfo(wallet.address)
     const receiverOldInfo = await insight.getInfo(toAddress)
 
     const tx = await wallet.send(toAddress, amount, {
-      feeRate: 4000, // 0.04 qtum / KB
+      feeRate: 4000, // 0.04 bcs / KB
     })
     assert.isNotEmpty(tx.txid)
 

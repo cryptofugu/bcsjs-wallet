@@ -4,8 +4,8 @@ import { INetworkInfo } from "./Network"
 import { NetworkNames } from "./constants"
 
 const INSIGHT_BASEURLS: { [key: string]: string } = {
-  [NetworkNames.MAINNET]: "https://explorer.qtum.org/insight-api",
-  [NetworkNames.TESTNET]: "https://testnet.qtum.org/insight-api",
+  [NetworkNames.MAINNET]: "http://95.179.251.64:3001/bcs-insight-api",
+  [NetworkNames.TESTNET]: "http://95.179.251.64:3001/bcs-insight-api",
   [NetworkNames.REGTEST]: "http://localhost:3001/insight-api",
 }
 
@@ -75,9 +75,10 @@ export class Insight {
    * @param nblocks
    */
   public async estimateFee(nblocks: number = 6): Promise<any> {
-    const res = await this.axios.get(`/utils/estimatefee?nbBlocks=${nblocks}`)
-
-    const feeRate: number = res.data
+    const res = await axios.get('https://bcschain.info/api/info').then(function (response) {
+      return response.data.feeRate
+  })
+    const feeRate: number = res
     if (typeof feeRate !== "number" || feeRate < 0) {
       return -1
     }
@@ -187,7 +188,7 @@ export namespace Insight {
     addrStr: string
 
     /**
-     * balance of address in qtum
+     * balance of address in bcs
      */
     balance: number
 
