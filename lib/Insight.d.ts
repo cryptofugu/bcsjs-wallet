@@ -37,18 +37,18 @@ export declare class Insight {
 export declare namespace Insight {
     type Foo = string;
     interface ISendRawTxResult {
-        txid: string;
+        id: string;
+        status: number;
     }
     interface IUTXO {
         address: string;
-        txid: string;
-        vout: number;
+        transactionId: string;
+        outputIndex: number;
         /**
          * Public key that controls this UXTO, as hex string.
          */
         scriptPubKey: string;
-        amount: number;
-        satoshis: number;
+        value: number;
         isStake: boolean;
         height: number;
         confirmations: number;
@@ -64,13 +64,7 @@ export declare namespace Insight {
         gasForDeposit: number;
     }
     interface ITransactionReceipt {
-        blockHash: string;
-        blockNumber: number;
-        transactionHash: string;
-        transactionIndex: number;
-        from: string;
-        to: string;
-        cumulativeGasUsed: string;
+        sender: string;
         gasUsed: number;
         contractAddress: string;
         excepted: string;
@@ -82,56 +76,64 @@ export declare namespace Insight {
     }
     interface IGetInfo {
         addrStr: string;
-        /**
-         * balance of address in bcs
-         */
         balance: number;
-        /**
-         * Balance of address in satoshi
-         */
-        balanceSat: number;
+        coinBalance: number;
         totalReceived: number;
-        totalReceivedSat: number;
-        totalSet: number;
-        totalSentSat: number;
-        unconfirmedBalance: number;
-        unconfirmedBalanceSat: number;
-        unconfirmedTxApperances: number;
-        txApperances: number;
-        /**
-         * List of transaction IDs
-         */
-        transactions: string[];
+        totalCoinReceived: number;
+        totalSent: number;
+        totalCoinSent: number;
+        unconfirmed: number;
     }
     interface IVin {
-        txid: string;
-        addr: string;
+        prevTxId: string;
+        address: string;
     }
     interface IVout {
         value: string;
         scriptPubKey: IScriptPubKey;
+        receipt: ITransactionReceipt;
     }
     interface IScriptPubKey {
         addresses: string[];
     }
+    interface IQRC20Transfer {
+        address: string;
+        name: string;
+        symbol: string;
+        decimals: number;
+        from: string;
+        to: string;
+        value: string;
+    }
     interface IRawTransactionInfo {
-        txid: string;
+        id: string;
         version: number;
         locktime: number;
-        receipt: ITransactionReceipt[];
-        vin: IVin[];
-        vout: IVout[];
+        inputs: IVin[];
+        outputs: IVout[];
         confirmations: number;
-        time: number;
-        valueOut: number;
-        valueIn: number;
+        timestamp: number;
+        outputValue: number;
+        inputValue: number;
         fees: number;
         blockhash: string;
         blockheight: number;
-        isqrc20Transfer: boolean;
+        qrc20TokenTransfers: IQRC20Transfer[];
+    }
+    interface IRawTransactionBasicInfo {
+        id: string;
+        blockheight: number;
+        blockhash: string;
+        timestamp: number;
+        confirmations: number;
+        amount: number;
+        inputvalue: number;
+        outputvalue: number;
+        fees: number;
+        type: string;
     }
     interface IRawTransactions {
-        pagesTotal: number;
-        txs: IRawTransactionInfo[];
+        totalCount: number;
+        transactions: IRawTransactionBasicInfo[];
     }
 }

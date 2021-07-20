@@ -43,17 +43,14 @@ export interface IContractCreateTXOptions {
 }
 export interface IUTXO {
     address: string;
-    txid: string;
-    hash: string;
-    pos: number;
-    /**
-     * Public key that controls this UXTO, as hex string.
-     */
+    transactionId: string;
+    outputIndex: number;
     scriptPubKey: string;
-    amount: number;
     value: number;
     isStake: boolean;
+    height: number;
     confirmations: number;
+    pos: number;
 }
 export declare function estimatePubKeyHashTransactionMaxSend(utxos: IUTXO[], to: string, feeRate: number): number;
 /**

@@ -26,8 +26,8 @@ describe("WalletRPCProvider", async () => {
     await generateBlock(network)
 
     const insight = network.insight()
-    const info = await insight.getTransactionInfo(tx.txid)
-    contractAddress = info.receipt[0].contractAddress
+    const info = await insight.getTransactionInfo(tx.id)
+    contractAddress = info.outputs[info.outputs.length].receipt.contractAddress
   })
 
   const provider = new WalletRPCProvider(wallet)

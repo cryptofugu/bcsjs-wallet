@@ -24,7 +24,7 @@ describe("Contract", () => {
     // tslint:enable:max-line-length
 
     const tx = await wallet.contractCreate(code)
-    txid = tx.txid
+    txid = tx.id
     assert.isNotEmpty(txid)
 
     await generateBlock(network)
@@ -36,10 +36,10 @@ describe("Contract", () => {
     const insight = network.insight()
 
     const info = await insight.getTransactionInfo(txid)
-    assert.equal(info.txid, txid)
+    assert.equal(info.id, txid)
 
-    const receipt = info.receipt[0]
-    assert.equal(receipt.to, "0000000000000000000000000000000000000000")
+    const receipt = info.outputs[info.outputs.length - 1].receipt
+    assert.equal(receipt.contractAddress, "0000000000000000000000000000000000000000")
     assert.equal(receipt.excepted, "None")
 
     contractAddress = receipt.contractAddress
